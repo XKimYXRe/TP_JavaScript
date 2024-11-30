@@ -5,110 +5,102 @@ function calculerRemiseSurAchat(montant) {
     const achat = {
         montant,
         remise: {
-            pourcentage:0,
-            valeur: 0,
+            pourcentage: 0,
+            montant: 0,
         },
         facture: 0,
     }
 
     if (achat.montant > 100000) {
         achat.remise.pourcentage = 15
-        achat.remise.valeur = (montant * achat.remise)/100
-        achat.facture = achat.montant - achat.remise.valeur
+        achat.remise.montant = (montant * achat.remise.pourcentage)/100
+        achat.facture = achat.montant - achat.remise.montant
         return achat
     }
 
-    if (achat.montant > 500000 && achat.montant <= 100000){
+    if (achat.montant > 50000 && achat.montant <= 100000){
         achat.remise.pourcentage = 10
-        achat.remise.valeur = (montant * achat.remise)/100
-        achat.facture = achat.montant - achat.remise.valeur
+        achat.remise.montant = (montant * achat.remise.pourcentage)/100
+        achat.facture = achat.montant - achat.remise.montant
         return achat
     }
 
-    if (achat.montant > 250000 && achat.montant <= 500000) {
+    if (achat.montant > 25000 && achat.montant <= 50000) {
         achat.remise.pourcentage = 5
-        achat.remise.valeur = (montant * achat.remise)/100
-        achat.facture = achat.montant - achat.remise.valeur
+        achat.remise.montant = (montant * achat.remise.pourcentage)/100
+        achat.facture = achat.montant - achat.remise.montant
         return achat
     }
 
         achat.remise.pourcentage = 0
-        achat.remise.valeur = 0
+        achat.remise.montant = 0
         achat.facture = montant
         return achat
 }
 
-function afficher(facture){
-        console.log(`Montant initial: ${facture.montant}`);
-        console.log(`Remise: ${facture.remise}%`)
-        console.log(`Montant finale: ${facture.montant - facture.remise}`);
-}
-
-function remiseAchat() {
-    console.log("")
-    console.log("Le programme s’exécute....")
-    console.log("")
-    let montant = parseInt(prompt("Veuillez saisie un montant:"))
-    console.log("")
-    if (montant >= 25000 && montant <= 50000) {
-        remise = ((montant * 5)/100);
+function afficher(setFacture){
+    const  {montant, remise, facture} = setFacture
         console.log(`Montant initial: ${montant}`);
-        console.log("Remise: 5%")
-        console.log(`Montant finale: ${montant - remise}`);
-    }
+        console.log(`Remise: ${remise.pourcentage}%`)
+        console.log(`Montant finale: ${facture}`);
+}
 
-    else if (montant >= 50000 && montant <= 100000){
-        remise = (montant * (10/100));
-        console.log(`Montant initial: ${montant}`)
-        console.log("Remise: 10%")
-        console.log(`Montant finale: ${montant - remise}`)
-    }
-
-    else if (montant > 100000) {
-        remise = (montant * (15/100));
-        console.log(`Montant initial: ${montant}`)
-        console.log("Remise: 15%")
-        console.log(`Montant finale: ${montant - remise}`)
-    }
-
-    else  {
-        console.log(`Montant initial: ${montant}`)
-        console.log("Remise: Aucune remise")
-        console.log(`Montant finale: ${montant}`)
-    }
-
+function espacer() {
+    console.log("")
 }
 
 
-function askUser(){
-    console.log("")
-    let userResponse = prompt("Voulez vous executer le programme? (Oui(o)/non(n)): ")
-    console.log("")
-    if(userResponse.toLowerCase() === "oui" || userResponse.toLowerCase() === "o"){
-        console.log("")
-        console.log("Le programme s’exécute....")
-        console.log("")
-        let montant = parseInt(prompt("Veuillez saisie un montant:"))
-        console.log("")
-    //    remiseAchat();
-        const facture = calculerRemiseSurAchat(montant)
-        afficher(facture)
-        askUser(); 
-    }
-    else {
-        console.log("")
-        console.log("************** Le programme est terminé!!! **************")
-        console.log("*********************** Merci!!! ************************")
-    }
 
+function instruction(){
+    espacer()
+    console.log("Pour faire une nouvelle facturation tapez: 'f'.")
+    console.log("Pour sortir de l'application tapez: 's'.")
+}
+
+function obtenirInstructionChoisie() {
+    const choix = readlineSync.question("Choisissez une option: ")
+    return choix
+}
+
+function traitementFacturation() {
+    while (true) {
+     instruction()
+    const  response = obtenirInstructionChoisie()
     
+
+    if(response.toLowerCase() === "f"){
+        nouvelleFacturation()
+        continue
+    }
+
+    if(response.toLowerCase() === "s"){
+        messageDeSortiApplication()
+        break
+    }
+   }
 }
 
-// askUser()
+function nouvelleFacturation(){
+    espacer()
+        const montant = parseInt(readlineSync.question("Veuillez saisie un montant:"))
+        espacer()
+        console.log("Facture en cours de traitement...")
+        espacer()
+        const facture = calculerRemiseSurAchat(montant)
+        console.log("Traitement terminée:")
+        afficher(facture)
+}
+
+function messageDeSortiApplication(){
+    espacer()
+        console.log("************** Vous êtes sortie de l'application **************")
+}
 
 function main(){
-    
-    askUser()
+    espacer()
+    console.log("************** Bienvenue sur l'application de facturation **************")
+    espacer()
+   traitementFacturation()
 }
 
 main()

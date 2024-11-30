@@ -14,7 +14,7 @@ function multiplication(){
     }
 }
 
-const nombre = parseInt(prompt("Veuillez entrer un nombre entier:"))
+const nombre = parseInt(readlineSync.question("Veuillez entrer un nombre entier:"))
 multiplication()
 
 

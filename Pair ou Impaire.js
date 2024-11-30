@@ -12,5 +12,5 @@ function pairOuImpair(nombre) {
     }
 }
 
-const nombre = parseInt(prompt("Saisir un nombre entier: "));
+const nombre = parseInt(readlineSync.question("Saisir un nombre entier: "));
 pairOuImpair(nombre);

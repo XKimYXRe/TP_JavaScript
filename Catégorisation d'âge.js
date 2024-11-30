@@ -26,5 +26,5 @@ function trancheAge(age) {
 
 }
 
-const age = prompt("Veuillez saisie votre age: ")
+const age = readlineSync.question("Veuillez saisie votre age: ")
 trancheAge(age)
